@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="108" fill="#2563eb"/>
+  <circle cx="160" cy="180" r="54" fill="#ffffff"/>
+  <path d="M126 254c72 20 148 20 220-4 19-6 38 8 38 28v40c0 17-11 32-27 37-78 26-168 27-249 3-17-5-29-21-29-39v-27c0-26 22-45 47-38z" fill="#ffffff"/>
+  <path d="M212 178h154c20 0 36 16 36 36s-16 36-36 36H212z" fill="#ffffff"/>
+  <text x="256" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="72" font-weight="700" fill="#ffffff">競</text>
+</svg>

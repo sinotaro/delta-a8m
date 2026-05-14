@@ -1,0 +1,17 @@
+{
+  "name": "競馬レース管理ツール",
+  "short_name": "競馬管理",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f7fb",
+  "theme_color": "#2563eb",
+  "description": "レース・出走馬・評価スコア・買い目を端末内で管理するローカル競馬ツール",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
