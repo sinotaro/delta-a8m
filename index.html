@@ -3,529 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Keiba Race Manager</title>
+  <title>Keiba Parser Manager</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#2563eb">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="競馬管理">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="競馬Parser">
   <style>
-    :root {
-      --bg: #f6f7fb;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --line: #e5e7eb;
-      --accent: #2563eb;
-      --good: #16a34a;
-      --warn: #d97706;
-      --bad: #dc2626;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-    header {
-      padding: 20px;
-      background: linear-gradient(135deg, #172554, #2563eb);
-      color: white;
-    }
-    header h1 { margin: 0 0 6px; font-size: 24px; }
-    header p { margin: 0; opacity: .9; }
-    main {
-      display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 16px;
-      padding: 16px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 14px;
-      box-shadow: 0 4px 14px rgba(15,23,42,.04);
-    }
-    h2 { font-size: 18px; margin: 0 0 12px; }
-    h3 { font-size: 15px; margin: 14px 0 8px; }
-    label { display:block; font-size: 12px; color: var(--muted); margin: 8px 0 4px; }
-    input, select, textarea {
-      width: 100%;
-      padding: 9px 10px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      font-size: 14px;
-      background: white;
-    }
-    textarea { min-height: 66px; resize: vertical; }
-    button {
-      border: none;
-      border-radius: 10px;
-      padding: 9px 12px;
-      background: var(--accent);
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    button.secondary { background: #64748b; }
-    button.danger { background: var(--bad); }
-    button.ghost {
-      background: white;
-      color: var(--accent);
-      border: 1px solid var(--line);
-    }
-    .row { display: flex; gap: 8px; align-items: center; }
-    .row > * { flex: 1; }
-    .race-list { display: flex; flex-direction: column; gap: 8px; }
-    .race-item {
-      padding: 10px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      cursor: pointer;
-      background: white;
-    }
-    .race-item.active { border-color: var(--accent); background: #eff6ff; }
-    .race-item strong { display:block; }
-    .muted { color: var(--muted); font-size: 12px; }
-    .tabs { display:flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
-    .tab {
-      background: white;
-      color: var(--text);
-      border: 1px solid var(--line);
-    }
-    .tab.active { background: var(--accent); color: white; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      overflow: hidden;
-    }
-    th, td {
-      border-bottom: 1px solid var(--line);
-      padding: 8px;
-      text-align: left;
-      vertical-align: top;
-    }
-    th { background: #f8fafc; color: #334155; }
-    .pill {
-      display:inline-block;
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      background: #e0e7ff;
-      color: #3730a3;
-    }
-    .score-high { color: var(--good); font-weight: 800; }
-    .score-mid { color: var(--warn); font-weight: 800; }
-    .score-low { color: var(--bad); font-weight: 800; }
-    .grid2 { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .summary {
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .metric {
-      background: #f8fafc;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 10px;
-    }
-    .metric b { font-size: 20px; display:block; margin-top: 4px; }
-    @media (max-width: 900px) {
-      main { grid-template-columns: 1fr; }
-      .grid2, .summary { grid-template-columns: 1fr; }
-    }
+    :root{--bg:#f6f7fb;--card:#fff;--text:#1f2937;--muted:#6b7280;--line:#e5e7eb;--accent:#2563eb;--good:#16a34a;--warn:#d97706;--bad:#dc2626}
+    *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+    header{padding:18px;background:linear-gradient(135deg,#172554,#2563eb);color:white}header h1{margin:0 0 6px;font-size:22px}header p{margin:0;opacity:.9;font-size:13px}
+    main{max-width:1400px;margin:0 auto;padding:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:0 4px 14px rgba(15,23,42,.04);margin-bottom:12px}
+    h2{font-size:18px;margin:0 0 12px}h3{font-size:15px;margin:14px 0 8px}label{display:block;font-size:12px;color:var(--muted);margin:8px 0 4px}
+    input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font-size:14px;background:white}
+    textarea{min-height:220px;resize:vertical;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
+    button{border:0;border-radius:10px;padding:10px 12px;background:var(--accent);color:white;font-weight:700;cursor:pointer}
+    button.secondary{background:#64748b}button.danger{background:var(--bad)}button.ghost{background:white;color:var(--accent);border:1px solid var(--line)}
+    .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1}
+    .tabs{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}.tab{background:white;color:var(--text);border:1px solid var(--line);white-space:nowrap}.tab.active{background:var(--accent);color:white}
+    table{width:100%;border-collapse:collapse;font-size:12px;min-width:980px}th,td{border-bottom:1px solid var(--line);padding:7px;text-align:left;vertical-align:top}th{background:#f8fafc;color:#334155;position:sticky;top:0;z-index:1}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;max-height:68vh}.muted{color:var(--muted);font-size:12px}
+    .pill{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:700;background:#e0e7ff;color:#3730a3}
+    .summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}.metric{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px}.metric b{font-size:20px;display:block;margin-top:4px}
+    .ok{color:var(--good);font-weight:800}.warn{color:var(--warn);font-weight:800}.bad{color:var(--bad);font-weight:800}
+    .columns{display:flex;gap:8px;flex-wrap:wrap}.colcheck{display:flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:6px 9px;background:white;font-size:12px}.colcheck input{width:auto}
+    .code{background:#0f172a;color:#e5e7eb;border-radius:12px;padding:10px;overflow:auto;font-size:12px;max-height:300px}.split{display:grid;grid-template-columns:340px 1fr;gap:12px}.list{display:flex;flex-direction:column;gap:8px}.item{padding:10px;border:1px solid var(--line);border-radius:12px;background:white;cursor:pointer}.item.active{border-color:var(--accent);background:#eff6ff}
+    @media(max-width:900px){main{padding:8px}.summary,.split{grid-template-columns:1fr}.card{padding:12px}textarea{min-height:240px}}
   </style>
 </head>
 <body>
-<header>
-  <h1>競馬レース管理ツール</h1>
-  <p>レース情報・出走馬・評価スコア・買い目を一元管理 / オフライン対応PWA版</p>
-</header>
-
+<header><h1>競馬データ統一Parser</h1><p>雑コピペ → 正規化 → 表形式 → 保存/分析用JSON。無料・ローカル処理優先。</p></header>
 <main>
-  <aside class="card">
-    <h2>レース一覧</h2>
-    <div class="race-list" id="raceList"></div>
+  <div class="tabs">
+    <button class="tab active" onclick="showMainTab('parser')">貼り付けParser</button>
+    <button class="tab" onclick="showMainTab('saved')">保存データ</button>
+    <button class="tab" onclick="showMainTab('manual')">手入力</button>
+    <button class="tab" onclick="showMainTab('settings')">項目/ルール</button>
+  </div>
 
-    <h3>レース追加</h3>
-    <label>レース名</label>
-    <input id="raceName" placeholder="例：ヴィクトリアマイル">
-    <div class="row">
-      <div>
-        <label>日付</label>
-        <input id="raceDate" type="date">
-      </div>
-      <div>
-        <label>格</label>
-        <select id="raceGrade">
-          <option>G1</option><option>G2</option><option>G3</option><option>L</option><option>OP</option><option>条件戦</option>
-        </select>
-      </div>
+  <section id="tab-parser" class="card">
+    <h2>貼り付け入力</h2>
+    <p class="muted">競馬サイトから雑にコピーしたテキストを貼り付け。取れない項目は空欄にします。</p>
+    <textarea id="rawInput" placeholder="ここに競馬データを貼り付け"></textarea>
+    <div class="row" style="margin-top:10px;">
+      <button onclick="parseInput()">解析して表にする</button>
+      <button class="secondary" onclick="saveParsedRace()">解析結果を保存</button>
+      <button class="ghost" onclick="loadSample()">サンプル投入</button>
+      <button class="ghost" onclick="clearInput()">クリア</button>
     </div>
-    <div class="row">
-      <div>
-        <label>競馬場</label>
-        <input id="raceCourse" placeholder="東京">
-      </div>
-      <div>
-        <label>距離</label>
-        <input id="raceDistance" placeholder="芝1600">
-      </div>
+    <div class="summary">
+      <div class="metric">検出馬数<b id="statHorseCount">0</b></div>
+      <div class="metric">過去走数<b id="statPastCount">0</b></div>
+      <div class="metric">抽出品質<b id="statQuality">-</b></div>
+      <div class="metric">保存状態<b id="statSaved">未保存</b></div>
     </div>
-    <label>メモ</label>
-    <textarea id="raceMemo" placeholder="馬場、展開、注目ポイントなど"></textarea>
-    <button onclick="addRace()">レース追加</button>
-    <button class="ghost" onclick="exportData()">JSON出力</button>
-    <label>JSON読込</label>
-    <input type="file" id="importFile" onchange="importData(event)">
-  </aside>
+    <h3>表示カラム</h3><div id="columnSelector" class="columns"></div>
+    <h3>出走馬テーブル</h3><div class="table-wrap" id="horseOutput"></div>
+    <h3>過去走テーブル</h3><div class="table-wrap" id="pastOutput"></div>
+    <h3>解析JSON</h3>
+    <div class="row"><button class="ghost" onclick="copyJson()">JSONコピー</button><button class="ghost" onclick="downloadJson()">JSONダウンロード</button></div>
+    <pre id="jsonOutput" class="code">{}</pre>
+  </section>
 
-  <section class="card">
-    <div id="emptyState">
-      <h2>レースを選択してください</h2>
-      <p class="muted">左からレースを追加・選択すると管理画面が表示されます。</p>
-    </div>
-
-    <div id="raceView" style="display:none;">
-      <div class="summary">
-        <div class="metric">レース<b id="mRace">-</b></div>
-        <div class="metric">出走頭数<b id="mHorses">0</b></div>
-        <div class="metric">最高スコア<b id="mTopScore">-</b></div>
-        <div class="metric">本命候補<b id="mTopHorse">-</b></div>
+  <section id="tab-saved" class="card" style="display:none;">
+    <h2>保存データ</h2>
+    <div class="split">
+      <div>
+        <div class="row"><button class="ghost" onclick="exportAll()">全データ出力</button><button class="danger" onclick="clearAllData()">全削除</button></div>
+        <label>JSON読込</label><input type="file" onchange="importAll(event)">
+        <h3>保存済みレース</h3><div id="savedList" class="list"></div>
       </div>
-
-      <div class="tabs">
-        <button class="tab active" onclick="showTab('horses')">出走馬</button>
-        <button class="tab" onclick="showTab('score')">評価表</button>
-        <button class="tab" onclick="showTab('bets')">買い目</button>
-        <button class="tab" onclick="showTab('report')">サマリー</button>
-      </div>
-
-      <div id="tab-horses">
-        <h2>出走馬追加</h2>
-        <div class="grid2">
-          <div>
-            <label>馬番</label><input id="horseNo" type="number" min="1">
-          </div>
-          <div>
-            <label>馬名</label><input id="horseName" placeholder="馬名">
-          </div>
-          <div>
-            <label>騎手</label><input id="jockey" placeholder="騎手">
-          </div>
-          <div>
-            <label>脚質</label>
-            <select id="style">
-              <option>逃げ</option><option>先行</option><option>好位差し</option><option>差し</option><option>追込</option><option>不明</option>
-            </select>
-          </div>
-        </div>
-
-        <h3>スコア入力</h3>
-        <div class="grid2">
-          <div><label>基礎能力 0-100</label><input id="base" type="number" value="70"></div>
-          <div><label>レース格実績 0-100</label><input id="gradeScore" type="number" value="70"></div>
-          <div><label>距離・コース適性 0-100</label><input id="fit" type="number" value="70"></div>
-          <div><label>近走内容 0-100</label><input id="recent" type="number" value="70"></div>
-          <div><label>騎手補正 0-100</label><input id="jockeyScore" type="number" value="70"></div>
-          <div><label>オッズ</label><input id="odds" type="number" step="0.1" placeholder="例：12.5"></div>
-        </div>
-        <label>メモ</label>
-        <textarea id="horseMemo" placeholder="前走内容、減点理由、買い/消し根拠"></textarea>
-        <button onclick="addHorse()">出走馬追加</button>
-
-        <h2 style="margin-top:16px;">出走馬一覧</h2>
-        <div id="horseTable"></div>
-      </div>
-
-      <div id="tab-score" style="display:none;">
-        <h2>評価表</h2>
-        <p class="muted">総合スコア = 基礎能力30% + 格実績20% + 適性20% + 近走15% + 騎手15%</p>
-        <div id="scoreTable"></div>
-      </div>
-
-      <div id="tab-bets" style="display:none;">
-        <h2>買い目管理</h2>
-        <div class="grid2">
-          <div><label>券種</label><select id="betType"><option>単勝</option><option>馬連</option><option>ワイド</option><option>3連複</option><option>3連単</option></select></div>
-          <div><label>買い目</label><input id="betCombo" placeholder="例：7-16-18"></div>
-          <div><label>金額</label><input id="betAmount" type="number" value="100"></div>
-          <div><label>想定オッズ</label><input id="betOdds" type="number" step="0.1"></div>
-        </div>
-        <label>狙い</label><textarea id="betMemo" placeholder="トリガミ回避、夢砲、保険など"></textarea>
-        <button onclick="addBet()">買い目追加</button>
-        <div id="betTable" style="margin-top:16px;"></div>
-      </div>
-
-      <div id="tab-report" style="display:none;">
-        <h2>レースサマリー</h2>
-        <button onclick="copyReport()">サマリーをコピー</button>
-        <textarea id="reportText" style="min-height:420px; margin-top:10px;"></textarea>
-      </div>
+      <div><h3>保存データ詳細</h3><div id="savedDetail"></div></div>
     </div>
   </section>
-</main>
 
-<script>
-const KEY = "keiba_race_manager_v1";
-let data = JSON.parse(localStorage.getItem(KEY) || '{"races":[]}');
-let selectedRaceId = data.races[0]?.id || null;
-
-function save(){ localStorage.setItem(KEY, JSON.stringify(data)); render(); }
-function uid(){ return Math.random().toString(36).slice(2) + Date.now().toString(36); }
-function currentRace(){ return data.races.find(r => r.id === selectedRaceId); }
-
-function weightedScore(h){
-  const v = n => Number(n || 0);
-  return Math.round(
-    v(h.base)*0.30 + v(h.gradeScore)*0.20 + v(h.fit)*0.20 + v(h.recent)*0.15 + v(h.jockeyScore)*0.15
-  );
-}
-function scoreClass(s){
-  if(s >= 80) return "score-high";
-  if(s >= 65) return "score-mid";
-  return "score-low";
-}
-function mark(s){
-  if(s >= 85) return "◎";
-  if(s >= 78) return "○";
-  if(s >= 70) return "▲";
-  if(s >= 62) return "△";
-  return "消";
-}
-
-function addRace(){
-  const race = {
-    id: uid(),
-    name: raceName.value || "新規レース",
-    date: raceDate.value,
-    grade: raceGrade.value,
-    course: raceCourse.value,
-    distance: raceDistance.value,
-    memo: raceMemo.value,
-    horses: [],
-    bets: []
-  };
-  data.races.unshift(race);
-  selectedRaceId = race.id;
-  raceName.value = raceDate.value = raceCourse.value = raceDistance.value = raceMemo.value = "";
-  save();
-}
-
-function deleteRace(id){
-  if(!confirm("このレースを削除しますか？")) return;
-  data.races = data.races.filter(r => r.id !== id);
-  selectedRaceId = data.races[0]?.id || null;
-  save();
-}
-
-function addHorse(){
-  const r = currentRace();
-  if(!r) return;
-  r.horses.push({
-    id: uid(),
-    no: Number(horseNo.value || 0),
-    name: horseName.value || "未入力",
-    jockey: jockey.value,
-    style: style.value,
-    base: Number(base.value || 0),
-    gradeScore: Number(gradeScore.value || 0),
-    fit: Number(fit.value || 0),
-    recent: Number(recent.value || 0),
-    jockeyScore: Number(jockeyScore.value || 0),
-    odds: Number(odds.value || 0),
-    memo: horseMemo.value
-  });
-  ["horseNo","horseName","jockey","odds","horseMemo"].forEach(id => document.getElementById(id).value = "");
-  save();
-}
-function deleteHorse(id){
-  const r = currentRace();
-  r.horses = r.horses.filter(h => h.id !== id);
-  save();
-}
-
-function addBet(){
-  const r = currentRace();
-  if(!r) return;
-  r.bets.push({
-    id: uid(),
-    type: betType.value,
-    combo: betCombo.value,
-    amount: Number(betAmount.value || 0),
-    odds: Number(betOdds.value || 0),
-    memo: betMemo.value
-  });
-  betCombo.value = betOdds.value = betMemo.value = "";
-  betAmount.value = 100;
-  save();
-}
-function deleteBet(id){
-  const r = currentRace();
-  r.bets = r.bets.filter(b => b.id !== id);
-  save();
-}
-
-function showTab(name){
-  ["horses","score","bets","report"].forEach(t => {
-    document.getElementById("tab-"+t).style.display = t === name ? "block" : "none";
-  });
-  document.querySelectorAll(".tab").forEach((b,i) => {
-    b.classList.toggle("active", ["horses","score","bets","report"][i] === name);
-  });
-  if(name === "report") buildReport();
-}
-
-function render(){
-  const list = document.getElementById("raceList");
-  list.innerHTML = data.races.map(r => `
-    <div class="race-item ${r.id===selectedRaceId?'active':''}" onclick="selectedRaceId='${r.id}'; render();">
-      <strong>${r.name}</strong>
-      <span class="muted">${r.date || "-"} / ${r.grade} / ${r.course || "-"} ${r.distance || ""}</span>
-      <div class="row" style="margin-top:8px;">
-        <button class="danger" onclick="event.stopPropagation(); deleteRace('${r.id}')">削除</button>
-      </div>
+  <section id="tab-manual" class="card" style="display:none;">
+    <h2>手入力</h2>
+    <div class="row">
+      <div><label>馬名</label><input id="mHorse"></div><div><label>騎手</label><input id="mJockey"></div><div><label>斤量</label><input id="mWeight"></div>
+      <div><label>性齢</label><input id="mSexAge"></div><div><label>脚質</label><input id="mStyle"></div><div><label>メモ</label><input id="mMemo"></div>
     </div>
-  `).join("");
+    <button style="margin-top:10px;" onclick="addManualHorse()">手入力追加</button>
+    <div class="table-wrap" style="margin-top:12px;" id="manualTable"></div>
+  </section>
 
-  const r = currentRace();
-  document.getElementById("emptyState").style.display = r ? "none" : "block";
-  document.getElementById("raceView").style.display = r ? "block" : "none";
-  if(!r) return;
-
-  const sorted = [...r.horses].sort((a,b) => weightedScore(b)-weightedScore(a));
-  const top = sorted[0];
-  document.getElementById("mRace").textContent = r.name;
-  document.getElementById("mHorses").textContent = r.horses.length;
-  document.getElementById("mTopScore").textContent = top ? weightedScore(top) : "-";
-  document.getElementById("mTopHorse").textContent = top ? `${top.no} ${top.name}` : "-";
-
-  horseTable.innerHTML = tableFor(sorted, true);
-  scoreTable.innerHTML = tableFor(sorted, false);
-
-  const total = r.bets.reduce((s,b)=>s+Number(b.amount||0),0);
-  betTable.innerHTML = `
-    <p><span class="pill">投資合計 ${total.toLocaleString()}円</span></p>
-    <table>
-      <thead><tr><th>券種</th><th>買い目</th><th>金額</th><th>想定払戻</th><th>狙い</th><th></th></tr></thead>
-      <tbody>${r.bets.map(b => `
-        <tr>
-          <td>${b.type}</td><td>${b.combo}</td><td>${b.amount.toLocaleString()}円</td>
-          <td>${Math.round((b.amount||0)*(b.odds||0)).toLocaleString()}円</td>
-          <td>${b.memo || ""}</td>
-          <td><button class="danger" onclick="deleteBet('${b.id}')">削除</button></td>
-        </tr>`).join("")}</tbody>
-    </table>`;
-  buildReport(false);
-}
-
-function tableFor(horses, editable){
-  return `<table>
-    <thead><tr>
-      <th>印</th><th>馬番</th><th>馬名</th><th>騎手</th><th>脚質</th>
-      <th>基礎</th><th>格</th><th>適性</th><th>近走</th><th>騎手</th><th>総合</th><th>オッズ</th><th>メモ</th>${editable ? "<th></th>" : ""}
-    </tr></thead>
-    <tbody>${horses.map(h => {
-      const s = weightedScore(h);
-      return `<tr>
-        <td><span class="pill">${mark(s)}</span></td>
-        <td>${h.no}</td><td><b>${h.name}</b></td><td>${h.jockey||""}</td><td>${h.style||""}</td>
-        <td>${h.base}</td><td>${h.gradeScore}</td><td>${h.fit}</td><td>${h.recent}</td><td>${h.jockeyScore}</td>
-        <td class="${scoreClass(s)}">${s}</td><td>${h.odds || ""}</td><td>${h.memo || ""}</td>
-        ${editable ? `<td><button class="danger" onclick="deleteHorse('${h.id}')">削除</button></td>` : ""}
-      </tr>`;
-    }).join("")}</tbody>
-  </table>`;
-}
-
-function buildReport(update=true){
-  const r = currentRace();
-  if(!r) return;
-  const horses = [...r.horses].sort((a,b)=>weightedScore(b)-weightedScore(a));
-  const betsTotal = r.bets.reduce((s,b)=>s+Number(b.amount||0),0);
-  const lines = [];
-  lines.push(`【${r.name} レース管理サマリー】`);
-  lines.push(`日付：${r.date || "-"} / 格：${r.grade} / 条件：${r.course || "-"} ${r.distance || ""}`);
-  lines.push(`メモ：${r.memo || "-"}`);
-  lines.push("");
-  lines.push("■ 評価順位");
-  horses.forEach((h,i)=>{
-    lines.push(`${i+1}. ${mark(weightedScore(h))} ${h.no} ${h.name} / 騎手:${h.jockey || "-"} / 総合:${weightedScore(h)} / オッズ:${h.odds || "-"} / メモ:${h.memo || "-"}`);
-  });
-  lines.push("");
-  lines.push("■ 買い目");
-  r.bets.forEach(b=>{
-    lines.push(`${b.type} ${b.combo} ${b.amount}円 / 想定払戻:${Math.round((b.amount||0)*(b.odds||0))}円 / ${b.memo || ""}`);
-  });
-  lines.push(`投資合計：${betsTotal}円`);
-  if(update) reportText.value = lines.join("\n");
-}
-
-function copyReport(){
-  buildReport(true);
-  reportText.select();
-  document.execCommand("copy");
-  alert("コピーしました");
-}
-
-function exportData(){
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "keiba-race-manager.json";
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function importData(e){
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    try {
-      data = JSON.parse(reader.result);
-      selectedRaceId = data.races?.[0]?.id || null;
-      save();
-    } catch {
-      alert("JSONの読み込みに失敗しました");
-    }
-  };
-  reader.readAsText(file);
-}
-
-render();
-</script>
-
+  <section id="tab-settings" class="card" style="display:none;">
+    <h2>項目/ルール設定</h2>
+    <p class="muted">列、正規化辞書、Parserルールを分離。後から parser.js を更新して精度改善できます。</p>
+    <h3>内部カラム定義</h3><pre id="schemaView" class="code"></pre>
+    <h3>正規化辞書</h3><pre id="dictView" class="code"></pre>
+    <h3>Parserルール</h3><pre id="rulesView" class="code"></pre>
+  </section>
+</main>
+<script src="./parser.js"></script>
+<script src="./app.js"></script>
 <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", async () => {
-    try {
-      const reg = await navigator.serviceWorker.register("./service-worker.js");
-      reg.addEventListener("updatefound", () => {
-        const newWorker = reg.installing;
-        newWorker.addEventListener("statechange", () => {
-          if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
-            const bar = document.createElement("div");
-            bar.style.cssText = "position:fixed;left:12px;right:12px;bottom:12px;background:#111827;color:white;padding:12px;border-radius:12px;z-index:9999;box-shadow:0 8px 20px rgba(0,0,0,.25);font-size:14px;";
-            bar.innerHTML = '新しいバージョンがあります。<button style="margin-left:10px;background:#2563eb;color:white;border:0;border-radius:8px;padding:7px 10px;" onclick="location.reload()">更新</button>';
-            document.body.appendChild(bar);
-          }
-        });
-      });
-    } catch (e) {
-      console.log("Service worker registration failed", e);
-    }
-  });
-}
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(console.log));}
 </script>
-
-</body>
-</html>
+</body></html>
